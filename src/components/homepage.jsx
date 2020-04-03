@@ -1,6 +1,8 @@
 import React from 'react';
 import './homepage.scss'
 
+//just test git
+
 const HomePage = (props) => {
   return(
     <div className="homepage">
@@ -19,7 +21,7 @@ const HomePage = (props) => {
         </div>
         <div className = "menu-item">
           <div className = "content">
-            <div className = "menu-item-name">Men</div>
+            <div className = "menu-item-name">Sneaker</div>
             <span className = "add-cart">SHOP NOW</span>
           </div> 
         </div>
