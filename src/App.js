@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import HomePage from './components/homepage';
+import HomePage from './pages/homepage/homepage';
 
-function App() {
+const  App = ()=> {
   return (
     <div className="App">
       <HomePage />
