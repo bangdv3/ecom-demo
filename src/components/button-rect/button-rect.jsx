@@ -1,9 +1,10 @@
 import React from 'react';
 import './button-rect.scss'
 
-const ButtonRect = ({btnLabel, ...orthers}) => {
+const ButtonRect = ({btnLabel, isGoogleSignIn, ...orthers}) => {
   return (
-    <button className='button-rect' {...orthers}>
+    <button className={ `${isGoogleSignIn? 'google-sign-in': ''} button-rect`} 
+      {...orthers}>
       {btnLabel}
     </button>
   );

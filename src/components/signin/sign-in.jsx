@@ -3,6 +3,7 @@ import FormInput from '../form-input/form-input';
 
 import './sign-in.scss'
 import ButtonRect from '../button-rect/button-rect';
+import { signInWithGoogle } from '../../firebase/firebase';
 
 
 class SignIn extends Component {
@@ -46,8 +47,13 @@ class SignIn extends Component {
             onChange={this.onChangeValue}
             label='Password'
             required /> 
-
-          <ButtonRect btnLabel = 'Sign in'/>
+          <div className='buttons'>
+            <ButtonRect btnLabel = 'Sign in' type='submit' />
+            <ButtonRect btnLabel = 'Sign in with Google' 
+              onClick={signInWithGoogle}
+              isGoogleSignIn={true}
+              /> 
+          </div>
         </form>
       </div>
      );

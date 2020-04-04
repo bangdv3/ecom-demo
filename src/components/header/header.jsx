@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo} from '../../assests/crown.svg'
 import './header.scss'
 
-function Header(props) {
+import {auth} from '../../firebase/firebase'
+
+
+const Header = ({currentUser})=> {
   return (
     <div className='header'>
       <Link className='logo-container' to='/'> 
@@ -12,7 +15,11 @@ function Header(props) {
       <div className='pages'>
         <Link className='page' to='/shop'>SHOP</Link>  
         <Link className='page' to='/contact'>CONTACT</Link>  
-
+        {
+          currentUser?
+          <div className='page' onClick={()=> auth.signOut()}>{currentUser.displayName}</div>
+          : <Link className='page' to='/signin'>Sign In</Link> 
+        }
       </div>
       
     </div>
