@@ -5,9 +5,9 @@ import {Switch, Route} from 'react-router-dom';
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import Header from './components/header/header';
-import SignPage from './pages/sign/signpage';
+import SignPage from './pages/signpage/signpage';
 
-import {auth} from './firebase/firebase';
+import {auth, fireCreateUser} from './firebase/firebase';
 
 const HatPage = () => {
   return (
@@ -28,9 +28,23 @@ class  App extends Component {
   unsubcribeFromAuth = null
 
   componentDidMount() {
-    this.unsubcribeFromAuth = auth.onAuthStateChanged( user => {
-      this.setState({currentUser : user });
-      console.log(user)
+    this.unsubcribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+      if (userAuth) { 
+        const userRef = await fireCreateUser(userAuth)
+        
+        userRef.onSnapshot(snapshot => {
+          //console.log(snapshot.data())
+          this.setState({
+            currentUser: {
+              id: snapshot.id, 
+              ...snapshot.data()
+            }
+          }, () => console.log(this.state) )
+          
+        })   
+      } else {
+        this.setState({currentUser : userAuth });
+      }
     })
   }
 
