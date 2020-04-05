@@ -1,11 +1,13 @@
 //similar constructor() in class 
+import { userActionTypes } from "./user-action-types";
+
 const INIT_STATE = {
   currentUser: null
 }
 
 const userReducer = (state = INIT_STATE, action) => {
   switch(action.type) {
-    case 'SET_CURRENT_USER':
+    case userActionTypes.SET_CURRENT_USER:
       return {
         ...state, currentUser: action.payload
       }
