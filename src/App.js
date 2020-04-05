@@ -8,6 +8,8 @@ import Header from './components/header/header';
 import SignPage from './pages/signpage/signpage';
 
 import {auth, fireCreateUser} from './firebase/firebase';
+import {connect} from 'react-redux';
+import { setCurrentUser } from './redux/user/user-actions';
 
 const HatPage = () => {
   return (
@@ -18,32 +20,31 @@ const HatPage = () => {
 }
 
 class  App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser : null
-    }
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     currentUser : null
+  //   }
+  // }
 
   unsubcribeFromAuth = null
 
   componentDidMount() {
+    const {setCurrentUser} = this.props;
     this.unsubcribeFromAuth = auth.onAuthStateChanged( async userAuth => {
       if (userAuth) { 
         const userRef = await fireCreateUser(userAuth)
         
         userRef.onSnapshot(snapshot => {
           //console.log(snapshot.data())
-          this.setState({
-            currentUser: {
+          setCurrentUser({
               id: snapshot.id, 
               ...snapshot.data()
-            }
-          }, () => console.log(this.state) )
+          });
           
         })   
       } else {
-        this.setState({currentUser : userAuth });
+        setCurrentUser(userAuth);
       }
     })
   }
@@ -55,7 +56,7 @@ class  App extends Component {
   render() {
     return (
       <div className="App"> 
-        <Header currentUser = {this.state.currentUser}/>
+        <Header/>
         <Switch> 
           <Route path= '/signin' component={SignPage}/>
           <Route path= '/shop' component={ShopPage}/>
@@ -68,4 +69,9 @@ class  App extends Component {
   
 }
 
-export default App;
+//to get updated by state
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps) (App);
