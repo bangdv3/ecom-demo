@@ -17,6 +17,16 @@ const cartReducer = (state = INIT_STATE, action) => {
         ...state, 
         cartItems: addItemToCart(state.cartItems, action.payload) //[...state.cartItems, action.payload]
       }
+    case CartActionTypes.SUBTRACT_ITEM: 
+      return {
+        ...state, 
+        cartItems: subtractItemFromCart(state.cartItems, action.payload)
+      }
+    case CartActionTypes.CLEAR_ITEM: 
+      return {
+        ...state, 
+        cartItems: state.cartItems.filter(item => item.id !== action.payload.id )
+      }
     default: 
       return state;
 
@@ -33,4 +43,16 @@ const addItemToCart = (items, itemToAdd) => {
     items.map(item => item.id === itemToAdd.id? {...item, qty: item.qty + 1}: item )
   )   
   return [...items, {...itemToAdd, qty: 1}] 
+}
+
+const subtractItemFromCart = (items, itemToSubttract) => {
+  const existingItem = items.find(finding_item => finding_item.id === itemToSubttract.id)
+  if (existingItem) {
+    if (existingItem.qty > 1) {
+      return (
+      items.map(item => item.id === itemToSubttract.id? {...item, qty: item.qty - 1}: item )
+    )}else {
+      return items.filter(item => item.id !== itemToSubttract.id )
+    } 
+  } 
 }
