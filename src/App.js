@@ -2,32 +2,20 @@ import React, { Component } from 'react';
 import './App.css';
 
 import {Switch, Route, Redirect} from 'react-router-dom';
+
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import Header from './components/header/header';
 import SignPage from './pages/signpage/signpage';
+import CheckOut from './pages/checkout/checkout';
 
 import {auth, fireCreateUser} from './firebase/firebase';
 import {connect} from 'react-redux';
 import { setCurrentUser } from './redux/user/user-actions';
 
-const HatPage = () => {
-  return (
-    <div>
-      <h1> Hats page</h1>
-    </div>
-  );
-}
+class  App extends Component { 
 
-class  App extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     currentUser : null
-  //   }
-  // }
-
-  unsubcribeFromAuth = null
+  unsubcribeFromAuth = null 
 
   componentDidMount() {
     const {setCurrentUser} = this.props;
@@ -57,12 +45,12 @@ class  App extends Component {
     return (
       <div className="App"> 
         <Header/>
-        <Switch> 
-          {/* <Route path= '/signin' component={SignPage}/> */}
-          <Route path= '/signin' render={
-            () => this.props.currentUser ? (<Redirect to='/'/>): (<SignPage />)
-          }/>
+        <Switch>  
+          <Route path= '/signin' 
+            render={ () => this.props.currentUser ? (<Redirect to='/'/>): (<SignPage />) }/>
           <Route path= '/shop' component={ShopPage}/>
+          <Route path= '/checkout' component={CheckOut}/>
+          
           <Route path= '/' component={HomePage}/>
           
         </Switch> 
