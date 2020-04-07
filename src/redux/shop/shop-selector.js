@@ -8,8 +8,8 @@ const colmapIDs = {
   hats: 1,
   jackets: 2,
   sneakers: 3,
-  men: 4, 
-  women:5 
+  men: 5, 
+  women:4 
 }
 
 export const selectCollections = createSelector(
