@@ -16,20 +16,18 @@ class ShopPage extends Component {
 
   state = {
     isLoading: true
-  }
+  } 
 
-  unsubscribeFromSnapshot = null;
   componentDidMount() {
-
     const collectionRef = firestore.collection('collections');
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot =>{
+    collectionRef.get().then(snapshot =>{
       const collectionMap = convertCollections2map(snapshot)
       // console.log(collectionMap)
       this.props.updateCollection(collectionMap) 
       this.setState({isLoading: false});
-    })
-      
+    }) 
   }
+  
 
   render() { 
     // if (this.state.isLoading) return (<div> loading ...</div>)
