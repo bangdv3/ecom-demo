@@ -6,6 +6,7 @@ import './collection.scss'
 
 
 const CollectionPage = ({match, collection})=>{
+  if (!collection) return (<div>no collection</div>)
   const {title, items} = collection
   return (
     <div className='collection-page'>

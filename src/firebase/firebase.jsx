@@ -46,4 +46,34 @@ export const fireCreateUser = async (user, addedData) => {
   return userRef;
 }
 
+export const fireAddCol2db = async (colKey, collectionsToAdd ) =>{
+  const collectionRef = firestore.collection(colKey);
+  
+  const batch = firestore.batch()
+  collectionsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc()
+    // console.log(newDocRef)
+    batch.set(newDocRef, obj)
+  });
+
+  return batch.commit()
+}
+
+export const convertCollections2map = (collections) => {
+  const trans2Collection = collections.docs.map(doc => {
+    const {title, items} = doc.data()
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title: title,
+      items: items
+    }
+  })
+  
+  return trans2Collection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection
+    return accumulator
+  }, {})
+}
+
 export default firebase;

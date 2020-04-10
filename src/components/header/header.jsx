@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { ReactComponent as Logo} from '../../assests/crown.svg'
 import './header.scss'
 
@@ -8,29 +7,30 @@ import {connect} from 'react-redux';
 import CartIcon from '../cart-icon/cart-icon';
 import CartDropdown from '../cart-dropdown/cart-dropdown';
 
+import {HeaderTag, LogoTag, PageGroupTag, PageLinkTag} from './header-tag'
 
 
 const Header = ({currentUser, cartHidden})=> {
   return (
-    <div className='header'>
-      <Link className='logo-container' to='/'> 
+    <HeaderTag>
+      <LogoTag to='/'> 
         <Logo className='logo'/>
-      </Link>
-      <div className='pages'>
-        <Link className='page' to='/shop'>SHOP</Link>  
-        <Link className='page' to='/contact'>CONTACT</Link>  
+      </LogoTag>
+      <PageGroupTag>
+        <PageLinkTag to='/shop'>SHOP</PageLinkTag>  
+        <PageLinkTag to='/contact'>CONTACT</PageLinkTag>  
         {
           currentUser?
-          <div className='page' onClick={()=> auth.signOut()}>Sign Out</div>
-          : <Link className='page' to='/signin'>Sign In</Link> 
+          <PageLinkTag as='div' onClick={()=> auth.signOut()}>Sign Out</PageLinkTag>
+          : <PageLinkTag to='/signin'>Sign In</PageLinkTag> 
         }
         <CartIcon/>
-      </div>
+      </PageGroupTag>
       {
         cartHidden? (null): (<CartDropdown />) 
       }
       
-    </div>
+    </HeaderTag>
   );
 }
 

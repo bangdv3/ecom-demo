@@ -2,22 +2,19 @@ import { createSelector } from "reselect";
 
 const selectShop = state => state.shop;
 
-
-
-const colmapIDs = {
-  hats: 1,
-  jackets: 2,
-  sneakers: 3,
-  men: 5, 
-  women:4 
-}
-
 export const selectCollections = createSelector(
   [selectShop],
   shop => shop.collections
 )
 
-export const selectCollection = colUrlparam => createSelector(
-  [selectShop],
-  shop => shop.collections.find(collection =>  collection.id === colmapIDs[colUrlparam])
+
+export const selectCollectionForPreview = createSelector(
+  [selectCollections],
+  collections => (collections ? Object.keys(collections).map(key => collections[key]): [])
 )
+
+export const selectCollection = colUrlparam => createSelector(
+  [selectCollections],
+  collections => (collections ? collections[colUrlparam]: null )
+)
+

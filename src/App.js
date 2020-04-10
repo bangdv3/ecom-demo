@@ -9,9 +9,11 @@ import Header from './components/header/header';
 import SignPage from './pages/signpage/signpage';
 import CheckOut from './pages/checkout/checkout';
 
-import {auth, fireCreateUser} from './firebase/firebase';
+import {auth, fireCreateUser } from './firebase/firebase';
 import {connect} from 'react-redux';
-import { setCurrentUser } from './redux/user/user-actions';
+import {setCurrentUser } from './redux/user/user-actions';
+//selector
+import {selectCurrentUser} from './redux/user/user-selector' 
 
 class  App extends Component { 
 
@@ -35,6 +37,7 @@ class  App extends Component {
         setCurrentUser(userAuth);
       }
     })
+    
   }
 
   componentWillUnmount() {
@@ -61,8 +64,8 @@ class  App extends Component {
 }
 
 //to get updated by state
-const mapStateToProps = ({user}) =>({
-  currentUser: user.currentUser
+const mapStateToProps = (state) =>({
+  currentUser: selectCurrentUser(state), 
 })
 
 const mapDispatchToProps = dispatch => ({
